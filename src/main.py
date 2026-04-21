@@ -18,10 +18,12 @@ v0 = 0.0
 
 t = np.linspace(0, 10, 1000)
 
+
+# Part 1: Free response
 plt.figure(figsize=(10, 6))
 
 for label, c in cases.items():
-    def system(time, y):
+    def free_system(time, y):
         x = y[0]
         v = y[1]
 
@@ -30,14 +32,45 @@ for label, c in cases.items():
 
         return [dxdt, dvdt]
 
-    sol = solve_ivp(system, [0, 10], [x0, v0], t_eval=t)
+    sol = solve_ivp(free_system, [0, 10], [x0, v0], t_eval=t)
     plt.plot(sol.t, sol.y[0], label=f"{label} (c={c:.2f})")
 
-plt.title("Mass-Spring-Damper Damping Cases")
+plt.title("Free Response of Mass-Spring-Damper System")
 plt.xlabel("Time")
 plt.ylabel("Position")
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.savefig("results/damping_cases.png", dpi=300)
+plt.show()
+
+
+# Part 2: Forced response
+c = 2.0
+
+def force_input(time):
+    return np.sin(2 * time)
+
+def forced_system(time, y):
+    x = y[0]
+    v = y[1]
+
+    dxdt = v
+    dvdt = (force_input(time) - c * v - k * x) / m
+
+    return [dxdt, dvdt]
+
+sol_forced = solve_ivp(forced_system, [0, 10], [0.0, 0.0], t_eval=t)
+
+plt.figure(figsize=(10, 6))
+plt.plot(sol_forced.t, sol_forced.y[0], label="Forced response")
+plt.plot(t, force_input(t), "--", label="Input force")
+
+plt.title("Forced Response of Mass-Spring-Damper System")
+plt.xlabel("Time")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("results/forced_response.png", dpi=300)
 plt.show()

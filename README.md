@@ -1,18 +1,17 @@
 # Mass-Spring-Damper Simulation
 
-This project simulates the free response of a mass-spring-damper system and compares three standard damping cases:
+This project simulates the behavior of a mass-spring-damper system in two cases:
 
-- underdamped
-- critically damped
-- overdamped
+- free response
+- forced response
 
 ## Description
 
-A mass-spring-damper system is a common second-order dynamic system in physics and engineering.
+A mass-spring-damper system is a standard second-order dynamic system in physics and engineering.
 
 The governing equation is:
 
-m x'' + c x' + k x = 0
+m x'' + c x' + k x = F(t)
 
 where:
 
@@ -20,17 +19,19 @@ where:
 - `c` is the damping coefficient
 - `k` is the spring constant
 - `x` is the displacement
+- `F(t)` is the external force input
 
-The purpose of this project is to study how the damping coefficient changes the system response over time.
+This project studies how damping changes the system response, and how the system behaves when an external sinusoidal force is applied.
 
-## Goal
+## Goals
 
-The main goals of this project are:
+The goals of this project are:
 
 - model a simple dynamic system
-- simulate its free response
-- compare standard damping behaviors
-- understand how damping affects oscillation and settling
+- simulate free response
+- compare standard damping cases
+- simulate forced response
+- understand how damping and input force affect the motion
 
 ## Parameters
 
@@ -39,30 +40,46 @@ The simulation uses:
 - `m = 1.0`
 - `k = 10.0`
 
-Initial conditions:
+Initial conditions for free response:
 
 - `x0 = 1.0`
 - `v0 = 0.0`
 
-The critical damping value is computed as:
+Initial conditions for forced response:
+
+- `x0 = 0.0`
+- `v0 = 0.0`
+
+The critical damping value is:
 
 c_critical = 2 * sqrt(m * k)
 
-Based on this, the following cases are compared:
+The free response compares:
 
 - `Underdamped`: `c = 2.0`
 - `Critically damped`: `c = 2 * sqrt(m * k)`
 - `Overdamped`: `c = 10.0`
 
-## Result
+The forced response uses:
 
-The simulation shows the difference between three damping cases:
+- `c = 2.0`
+- `F(t) = sin(2t)`
+
+## Results
+
+### Free Response
+
+The free response compares three damping cases:
 
 - the underdamped case oscillates before settling
-- the critically damped case returns to equilibrium quickly without oscillating
+- the critically damped case returns quickly without oscillation
 - the overdamped case returns more slowly without oscillation
 
-This comparison helps show the effect of damping on the motion of a second-order system.
+### Forced Response
+
+The forced response shows how the system reacts to a sinusoidal input force.
+
+The output displacement does not exactly match the input force because the system dynamics depend on mass, damping, and spring stiffness.
 
 ## Output
 
@@ -70,6 +87,7 @@ Saved figures:
 
 - `results/damping_comparison.png`
 - `results/damping_cases.png`
+- `results/forced_response.png`
 
 ## Run
 
