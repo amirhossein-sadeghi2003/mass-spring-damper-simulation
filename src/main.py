@@ -130,3 +130,16 @@ plt.legend()
 plt.tight_layout()
 plt.savefig("results/spring_effect.png", dpi=300)
 plt.show()
+
+# Part 5: Velocity response
+plt.figure(figsize=(10, 6))
+plt.plot(sol_forced.t, sol_forced.y[1], label="Velocity response")
+
+plt.title("Velocity Response of Mass-Spring-Damper System")
+plt.xlabel("Time")
+plt.ylabel("Velocity")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("results/velocity_response.png", dpi=300)
+plt.show()
