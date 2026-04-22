@@ -101,3 +101,32 @@ plt.legend()
 plt.tight_layout()
 plt.savefig("results/mass_effect.png", dpi=300)
 plt.show()
+
+# Part 4: Effect of spring constant
+spring_values = [5.0, 10.0, 20.0]
+m = 1.0
+c = 2.0
+
+plt.figure(figsize=(10, 6))
+
+for k_value in spring_values:
+    def spring_system(time, y):
+        x = y[0]
+        v = y[1]
+
+        dxdt = v
+        dvdt = -(c / m) * v - (k_value / m) * x
+
+        return [dxdt, dvdt]
+
+    sol_spring = solve_ivp(spring_system, [0, 10], [x0, v0], t_eval=t)
+    plt.plot(sol_spring.t, sol_spring.y[0], label=f"k = {k_value}")
+
+plt.title("Effect of Spring Constant on Free Response")
+plt.xlabel("Time")
+plt.ylabel("Position")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("results/spring_effect.png", dpi=300)
+plt.show()
