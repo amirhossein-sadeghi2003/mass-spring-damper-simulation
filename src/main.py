@@ -21,6 +21,8 @@ t = np.linspace(0, 10, 1000)
 # Part 1: Free response
 plt.figure(figsize=(10, 6))
 
+underdamped_solution = None
+
 for label, c in cases.items():
     def free_system(time, y):
         x = y[0]
@@ -33,6 +35,9 @@ for label, c in cases.items():
 
     sol = solve_ivp(free_system, [0, 10], [x0, v0], t_eval=t)
     plt.plot(sol.t, sol.y[0], label=f"{label} (c={c:.2f})")
+
+    if label == "Underdamped":
+        underdamped_solution = sol
 
 plt.title("Free Response of Mass-Spring-Damper System")
 plt.xlabel("Time")
@@ -142,4 +147,39 @@ plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.savefig("results/velocity_response.png", dpi=300)
+plt.show()
+
+# Part 6: Overshoot and settling time for underdamped case
+x_under = underdamped_solution.y[0]
+t_under = underdamped_solution.t
+
+peak_displacement = np.max(np.abs(x_under))
+
+tolerance = 0.02 * abs(x0)
+
+settling_time = None
+for i in range(len(x_under)):
+    if np.all(np.abs(x_under[i:]) <= tolerance):
+        settling_time = t_under[i]
+        break
+
+print("Underdamped case metrics")
+print(f"Peak displacement: {peak_displacement:.4f}")
+print(f"Settling time (2% band): {settling_time:.4f} s")
+
+plt.figure(figsize=(10, 6))
+plt.plot(t_under, x_under, label="Underdamped response")
+plt.axhline(tolerance, color="red", linestyle="--", label="2% band")
+plt.axhline(-tolerance, color="red", linestyle="--")
+
+if settling_time is not None:
+    plt.axvline(settling_time, color="green", linestyle="--", label=f"Settling time = {settling_time:.2f}s")
+
+plt.title("Underdamped Response with Settling Time")
+plt.xlabel("Time")
+plt.ylabel("Position")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("results/underdamped_metrics.png", dpi=300)
 plt.show()
