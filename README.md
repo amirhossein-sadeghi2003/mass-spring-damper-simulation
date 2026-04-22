@@ -1,9 +1,6 @@
 # Mass-Spring-Damper Simulation
 
-This project simulates the behavior of a mass-spring-damper system in two cases:
-
-- free response
-- forced response
+This project simulates the behavior of a mass-spring-damper system in different scenarios.
 
 ## Description
 
@@ -21,7 +18,7 @@ where:
 - `x` is the displacement
 - `F(t)` is the external force input
 
-This project studies how damping changes the system response, and how the system behaves when an external sinusoidal force is applied.
+This project studies how damping, external force, and mass affect the system response.
 
 ## Goals
 
@@ -31,11 +28,12 @@ The goals of this project are:
 - simulate free response
 - compare standard damping cases
 - simulate forced response
-- understand how damping and input force affect the motion
+- analyze the effect of mass on system behavior
+- understand how system parameters affect motion
 
 ## Parameters
 
-The simulation uses:
+Base parameters:
 
 - `m = 1.0`
 - `k = 10.0`
@@ -54,32 +52,46 @@ The critical damping value is:
 
 c_critical = 2 * sqrt(m * k)
 
-The free response compares:
+## Simulations
+
+### 1. Free Response
+
+The free response compares three damping cases:
 
 - `Underdamped`: `c = 2.0`
 - `Critically damped`: `c = 2 * sqrt(m * k)`
 - `Overdamped`: `c = 10.0`
+
+### 2. Forced Response
 
 The forced response uses:
 
 - `c = 2.0`
 - `F(t) = sin(2t)`
 
+### 3. Effect of Mass
+
+The mass comparison uses:
+
+- `m = 0.5`
+- `m = 1.0`
+- `m = 2.0`
+
+while keeping `c = 2.0` and `k = 10.0` fixed.
+
 ## Results
 
 ### Free Response
 
-The free response compares three damping cases:
-
-- the underdamped case oscillates before settling
-- the critically damped case returns quickly without oscillation
-- the overdamped case returns more slowly without oscillation
+The free response shows the difference between underdamped, critically damped, and overdamped behavior.
 
 ### Forced Response
 
-The forced response shows how the system reacts to a sinusoidal input force.
+The forced response shows how the system reacts to a sinusoidal external force.
 
-The output displacement does not exactly match the input force because the system dynamics depend on mass, damping, and spring stiffness.
+### Mass Effect
+
+The mass comparison shows that changing the mass changes the speed and oscillation behavior of the system. Lower mass gives a faster response, while higher mass makes the system slower.
 
 ## Output
 
@@ -88,6 +100,7 @@ Saved figures:
 - `results/damping_comparison.png`
 - `results/damping_cases.png`
 - `results/forced_response.png`
+- `results/mass_effect.png`
 
 ## Run
 

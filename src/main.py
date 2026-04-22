@@ -18,7 +18,6 @@ v0 = 0.0
 
 t = np.linspace(0, 10, 1000)
 
-
 # Part 1: Free response
 plt.figure(figsize=(10, 6))
 
@@ -43,7 +42,6 @@ plt.legend()
 plt.tight_layout()
 plt.savefig("results/damping_cases.png", dpi=300)
 plt.show()
-
 
 # Part 2: Forced response
 c = 2.0
@@ -73,4 +71,33 @@ plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.savefig("results/forced_response.png", dpi=300)
+plt.show()
+
+# Part 3: Effect of mass
+mass_values = [0.5, 1.0, 2.0]
+c = 2.0
+k = 10.0
+
+plt.figure(figsize=(10, 6))
+
+for m_value in mass_values:
+    def mass_system(time, y):
+        x = y[0]
+        v = y[1]
+
+        dxdt = v
+        dvdt = -(c / m_value) * v - (k / m_value) * x
+
+        return [dxdt, dvdt]
+
+    sol_mass = solve_ivp(mass_system, [0, 10], [x0, v0], t_eval=t)
+    plt.plot(sol_mass.t, sol_mass.y[0], label=f"m = {m_value}")
+
+plt.title("Effect of Mass on Free Response")
+plt.xlabel("Time")
+plt.ylabel("Position")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("results/mass_effect.png", dpi=300)
 plt.show()
