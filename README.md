@@ -31,6 +31,7 @@ The goals of this project are:
 - analyze the effect of mass
 - analyze the effect of spring constant
 - visualize velocity response
+- compute simple response metrics
 - improve understanding of second-order system behavior
 
 ## Base Parameters
@@ -105,6 +106,15 @@ The velocity response is plotted for the forced-response case.
 
 This helps show how the speed of the system changes over time, not only its position.
 
+### 6. Response Metrics
+
+For the underdamped free-response case, the project also computes:
+
+- peak displacement
+- settling time using a 2% tolerance band
+
+These metrics help describe the transient behavior of the system in a more control-oriented way.
+
 ## Results
 
 This project shows several important behaviors of a second-order dynamic system:
@@ -114,6 +124,7 @@ This project shows several important behaviors of a second-order dynamic system:
 - mass affects the speed of the response
 - spring stiffness affects oscillation frequency
 - velocity gives additional information about system motion
+- response metrics help quantify transient behavior
 
 ## Output
 
@@ -125,6 +136,7 @@ Saved figures:
 - `results/mass_effect.png`
 - `results/spring_effect.png`
 - `results/velocity_response.png`
+- `results/underdamped_metrics.png`
 
 ## Run
 
